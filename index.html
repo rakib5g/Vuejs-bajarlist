@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue js Tutorials.</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+    <div id="app" class="container">
+        <div class="row py-5">
+            <div class="col-md-6 m-auto">
+                <div class="card">
+                    <div class="card-header bg-info  text-center text-light">
+                        <h3 class="text-uppercase">{{ title }}</h3>
+                        <small>Vue Js Application</small>
+                    </div>
+                    <div class="card-body">
+                        <form @submit.prevent="addItem" action="" class="pb-4">
+                            <input v-model="newItem" type="text" class="form-control" placeholder="Enter Product name">
+                        </form>
+                        <table class="table">
+                            <tr class="bg-light">
+                                <th>Sl</th>
+                                <th width="50%">Name</th>
+                                <th class="text-center">Price</th>
+                                <th class="text-center" width="20%">Action</th>
+                            </tr>
+                            <tr v-for="(item,index) in items" :key="index">
+                                <td>{{ index+1 }}</td>
+                                <td>{{ item.name }}</td>
+                                <td class="text-center">
+                                    <input v-model="item.price" class="form-control" type="text">
+                                </td>
+                                <td class="text-center">
+                                    <button @click="removeItem(index)" class="btn btn-sm btn-danger">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        
+                            <tr class="bg-light">
+                                <th></th>
+                                <th>Total =</th>
+                                <th class=""> {{ total }}<small> TK</small></th>
+                                <th></th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="card-footer text-center bg-info text-light">
+                        <small>All Right Received By Rakib &copy; 2018</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--vue js-->
+    <!-- production version, optimized for size and speed -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>    
+    <script type="text/javascript">
+        new Vue({
+            el: "#app",
+            data: {
+                title: "Bazar List",
+                items:[
+                    {name: "Rice", price: "56"},
+                    {name: "Potol", price: "79.54"},
+                    {name: "Tomato", price: "24.68"}
+                ],
+                newItem: ""
+            },
+            methods:{
+                addItem(){
+                    this.items.push({
+                        name: this.newItem,
+                        price: 0.0
+                    })
+                },
+                removeItem(index){
+                    this.items.splice(index, 1)
+                }
+            },
+            computed: {
+                total(){
+                    var total = 0
+                    this.items.forEach(item =>{
+                        total += parseFloat(item.price)
+                    })
+                    return total
+                }
+            }
+        });
+    </script>
+</body>
+</html>
